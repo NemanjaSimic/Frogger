@@ -18,9 +18,6 @@ class SimMoveDemo(QWidget):
 
     def __init__(self):
         super().__init__()
-        #QWidget.__init__(self)
-        #self.begin = QtCore.QPoint()
-        #self.end = QtCore.QPoint()
 
         self.pix1 = QPixmap("frog.png")
 
@@ -67,6 +64,10 @@ class SimMoveDemo(QWidget):
             self.pix1 = QPixmap("frog_back.png")
 
         self.label1.setPixmap(self.pix1)
+
+    def closeEvent(self, event):
+        self.key_notifier.die()
+        self.movingCar.die()
 
     def __frogMovement__(self, key):
         rec1 = self.label1.geometry()
