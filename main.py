@@ -18,13 +18,13 @@ class SimMoveDemo(QWidget):
 
     def __init__(self):
         super().__init__()
-        QWidget.__init__(self)
-        self.begin = QtCore.QPoint()
-        self.end = QtCore.QPoint()
+        #QWidget.__init__(self)
+        #self.begin = QtCore.QPoint()
+        #self.end = QtCore.QPoint()
+
         self.pix1 = QPixmap("frog.png")
+
         self.label1 = QLabel(self)
-        self.setGeometry(100, 100, 480, 600)
-        self.setFixedSize(self.size())
         self.label2 = QLabel(self)
 
         self.movingCar = CarMoving(self)
@@ -33,21 +33,23 @@ class SimMoveDemo(QWidget):
         self.__init_ui__()
 
         self.key_notifier = KeyNotifier()
-
         self.key_notifier.key_signal.connect(self.__frogMovement__)
         self.key_notifier.start()
 
     def __init_ui__(self):
+
         self.setGeometry(400, 300, 480, 600)
-        self.setWindowTitle("Frogger")
-        self.label1.setGeometry(220, 560, self.pix1.height(), self.pix1.width())
-        # self.setStyleSheet('background-image: url(background.png)')
+        self.setFixedSize(self.size())
         oImage = QImage("background.png")
         sImage = oImage.scaled(QSize(480, 600))
         palette = QPalette()
         palette.setBrush(10, QBrush(sImage))
         self.setPalette(palette)
 
+        self.label1.setPixmap(self.pix1)
+        self.label1.setGeometry(220, 560, 40, 40)
+
+        self.setWindowTitle("Frogger")
         self.show()
 
     def keyPressEvent(self, event):
