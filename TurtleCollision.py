@@ -40,13 +40,12 @@ class CollisionTurtle:
         self.onTurtle = False
         for log in self.movingTurtle.turtlesObjs:
             log_geo = log.label.geometry()
-            if (((frog.x() + odstupanje_od_kolizije >= log_geo.x() and frog.x() - odstupanje_od_kolizije <=
-                  (log_geo.x() + log_geo.width()))
+            if (((frog.x() + odstupanje_od_kolizije >= log_geo.x() and frog.x() - odstupanje_od_kolizije <= (log_geo.x() + log_geo.width()))
                 and (frog.x()+frog.width() - odstupanje_od_kolizije <= log_geo.x() + log_geo.width()
-                     and (frog.x()+frog.width() + odstupanje_od_kolizije >= log_geo.x())))
-                        and (frog.y() >= log_geo.y() and frog.y() <= (log_geo.y()+log_geo.width()))):
-                            if log.pluta:
-                                self.moveFrogToRight(frog.x() - log.brzina, frog.y())
-                                self.onTurtle = True
-                            else:
-                                self.label1.setGeometry(220, 560, 40, 40)
+                and (frog.x()+frog.width() + odstupanje_od_kolizije >= log_geo.x())))
+                    and (frog.y() >= log_geo.y() and frog.y() < (log_geo.y()+log_geo.height()))):
+                        if log.pluta:
+                            self.moveFrogToRight(frog.x() - log.brzina, frog.y())
+                            self.onTurtle = True
+                        else:
+                            self.label1.setGeometry(220, 560, 40, 40)
