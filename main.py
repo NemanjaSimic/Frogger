@@ -10,6 +10,7 @@ import time
 from multiprocessing import Process, Queue
 from threading import Thread
 from MovingCars import CarMoving
+from MovingLogs import LogMoving
 from CarCollision import *
 
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
@@ -26,6 +27,8 @@ class SimMoveDemo(QWidget):
         self.label2 = QLabel(self)
 
         self.movingCar = CarMoving(self)
+
+        self.movingLog = LogMoving(self)
 
         # self.player1 = Player(self.label)
         self.__init_ui__()
