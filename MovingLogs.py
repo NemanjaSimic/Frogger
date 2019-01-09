@@ -28,7 +28,7 @@ class LogMovement(QObject):
     def __work__(self):
         while not self.is_done:
             self.logMovementSignal.emit()
-            time.sleep(0.05)
+            time.sleep(0.1)
 
 
 class LogMoving(QWidget):
@@ -38,24 +38,41 @@ class LogMoving(QWidget):
         self.pix2 = QPixmap('log_big.png')
         self.pix3 = QPixmap('log_medium.png')
 
+        self.logSpeed = 2
+
         self.labelSmallLog1 = QLabel(self)
+        self.labelSmallLog1Obj = MovingLogsObj(self.labelSmallLog1, True, self.logSpeed*0.7)
         self.labelSmallLog2 = QLabel(self)
+        self.labelSmallLog2Obj = MovingLogsObj(self.labelSmallLog2, True, self.logSpeed*0.7)
         self.labelSmallLog3 = QLabel(self)
+        self.labelSmallLog3Obj = MovingLogsObj(self.labelSmallLog3, True, self.logSpeed*0.7)
         self.labelSmallLog4 = QLabel(self)
+        self.labelSmallLog4Obj = MovingLogsObj(self.labelSmallLog4, True, self.logSpeed*0.7)
         self.labelBigLog1 = QLabel(self)
+        self.labelBigLog1Obj1 = MovingLogsObj(self.labelBigLog1, True, self.logSpeed*3)
         self.labelBigLog2 = QLabel(self)
+        self.labelBigLog1Obj2 = MovingLogsObj(self.labelBigLog2, True, self.logSpeed * 3)
         self.labelBigLog3 = QLabel(self)
+        self.labelBigLog1Obj3 = MovingLogsObj(self.labelBigLog3, True, self.logSpeed * 3)
         self.labelBigLog4 = QLabel(self)
+        self.labelBigLog1Obj4 = MovingLogsObj(self.labelBigLog4, True, self.logSpeed * 3)
         self.labelMediumLog1 = QLabel(self)
+        self.labelMediumLog1Obj = MovingLogsObj(self.labelMediumLog1, True, self.logSpeed)
         self.labelMediumLog2 = QLabel(self)
+        self.labelMediumLog2Obj = MovingLogsObj(self.labelMediumLog2, True, self.logSpeed)
         self.labelMediumLog3 = QLabel(self)
+        self.labelMediumLog3Obj = MovingLogsObj(self.labelMediumLog3, True, self.logSpeed)
         self.labelMediumLog4 = QLabel(self)
+        self.labelMediumLog4Obj = MovingLogsObj(self.labelMediumLog4, True, self.logSpeed)
+
+        self.logsObjs = [self.labelSmallLog1Obj, self.labelSmallLog2Obj, self.labelSmallLog3Obj, self.labelSmallLog4Obj,
+                         self.labelBigLog1Obj1, self.labelBigLog1Obj2, self.labelBigLog1Obj3, self.labelBigLog1Obj4,
+                         self.labelMediumLog1Obj, self.labelMediumLog2Obj, self.labelMediumLog3Obj, self.labelMediumLog4Obj]
 
         self.smallLogs = [self.labelSmallLog1, self.labelSmallLog2, self.labelSmallLog3, self.labelSmallLog4]
         self.bigLogs = [self.labelBigLog1, self.labelBigLog2, self.labelBigLog3, self.labelBigLog4]
         self.mediumLogs = [self.labelMediumLog1, self.labelMediumLog2, self.labelMediumLog3, self.labelMediumLog4]
 
-        self.logSpeed = 2
         self.__initPosition__()
 
         self.logMoving = LogMovement()
@@ -108,3 +125,18 @@ class LogMoving(QWidget):
             mediumLog.setGeometry(mediumLogTemp.x() + logSpeed, mediumLogTemp.y(), mediumLogTemp.width(), mediumLogTemp.height())
             if mediumLogTemp.x() >= 605:
                 mediumLog.setGeometry(-125, 125, 125, 27)
+
+
+class MovingLogsObj:
+
+    def __init__(self, label, smer, brzina):
+        self.label = label
+        self.smer = smer
+        self.brzina = brzina
+        self.pluta = True
+
+    def potop(self):
+        self.pluta = False
+
+    def plutaj(self):
+        self.pluta = True

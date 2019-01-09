@@ -12,6 +12,7 @@ from threading import Thread
 from MovingCars import CarMoving
 from MovingLogs import LogMoving
 from CarCollision import *
+from LogsCollision import *
 
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
@@ -40,6 +41,10 @@ class SimMoveDemo(QWidget):
         self.car_collision = CarCollision()
         self.car_collision.carCollisionSignal.connect(self.__car_collision__)
         self.car_collision.start()
+
+        self.log_collision = LogCollision()
+        self.log_collision.logCollisionSignal.connect(self.__log_collision__)
+        self.log_collision.start()
 
     def __init_ui__(self):
 
@@ -80,6 +85,12 @@ class SimMoveDemo(QWidget):
 
     def __car_collision__(self):
         Collision.detect(self)
+
+    def __log_collision__(self):
+        CollisionLog.detect(self)
+
+    def moveFrogToRight(self, x, y):
+        self.label1.setGeometry(x, y, 40, 40)
 
     def __frogMovement__(self, key):
         rec1 = self.label1.geometry()
