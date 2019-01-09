@@ -33,7 +33,6 @@ class TurtleCollision(QObject):
 
 
 class CollisionTurtle:
-    onTurtle = False
 
     def detect(self):
         frog = self.label1.geometry()

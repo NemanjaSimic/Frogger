@@ -15,6 +15,7 @@ from CarCollision import *
 from LogsCollision import *
 from TurtleCollision import *
 from MovingTurtles import TurtleMoving
+from RiverCollision import RiverCollision
 
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
@@ -34,6 +35,9 @@ class SimMoveDemo(QWidget):
         self.movingLog = LogMoving(self)
         self.movingTurtle = TurtleMoving(self)
 
+        self.onTurtle = False
+        self.onLog = False
+
         # self.player1 = Player(self.label)
         self.__init_ui__()
 
@@ -52,6 +56,10 @@ class SimMoveDemo(QWidget):
         self.turtle_collision = TurtleCollision()
         self.turtle_collision.turtleCollisionSignal.connect(self.__turtle_collision__)
         self.turtle_collision.start()
+
+        self.river_collision = RiverCollision()
+        self.river_collision.riverCollisionSignal.connect(self.__in_river)
+        self.river_collision.start()
 
     def __init_ui__(self):
 
@@ -92,6 +100,7 @@ class SimMoveDemo(QWidget):
         self.car_collision.die()
         self.turtle_collision.die()
         self.log_collision.die()
+        self.river_collision.die()
 
     def __car_collision__(self):
         Collision.detect(self)
@@ -107,6 +116,12 @@ class SimMoveDemo(QWidget):
 
     def moveFrogToLeft(self, x, y):
         self.label1.setGeometry(x, y, 40, 40)
+
+    def __in_river(self):
+        frog = self.label1.geometry()
+        if frog.y() < 320 and frog.y() > 80:
+            if not self.onTurtle and not self.onLog:
+                self.label1.setGeometry(220, 560, 40, 40)
 
     def __frogMovement__(self, key):
         rec1 = self.label1.geometry()

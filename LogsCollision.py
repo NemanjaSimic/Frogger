@@ -34,7 +34,6 @@ class LogCollision(QObject):
 # and ((frog.y() >= log_geo.y() and frog.y() <=log_geo.y()+log_geo.height()) or (frog.y()+frog.height() < log_geo.y() + log_geo.height()
                         #and frog.y()+frog.height() > log_geo.y()))
 class CollisionLog:
-    onLog = False
 
     def detect(self):
         frog = self.label1.geometry()

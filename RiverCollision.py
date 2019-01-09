@@ -26,9 +26,4 @@ class RiverCollision(QObject):
     def __work__(self):
         while not self.is_done:
             self.riverCollisionSignal.emit()
-            time.sleep(0.1)
-
-
-class CollisionRiver:
-
-    def detect(self):
+            time.sleep(0.2)
