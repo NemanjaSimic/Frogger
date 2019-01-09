@@ -13,6 +13,7 @@ from MovingCars import CarMoving
 from MovingLogs import LogMoving
 from CarCollision import *
 from LogsCollision import *
+from MovingTurtles import TurtleMoving
 
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
@@ -28,7 +29,7 @@ class SimMoveDemo(QWidget):
         self.label2 = QLabel(self)
 
         self.movingCar = CarMoving(self)
-
+        self.movingTurtle = TurtleMoving(self)
         self.movingLog = LogMoving(self)
 
         # self.player1 = Player(self.label)
