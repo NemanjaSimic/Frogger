@@ -61,6 +61,8 @@ class CarMoving(QWidget):
         self.BPcars = [self.labelBPcar1, self.labelBPcar2, self.labelBPcar3]
         self.trucks = [self.labelTruck1, self.labelTruck2]
 
+        self.vehicles = [self.cars, self.tractors, self.formulas, self.BPcars, self.trucks]
+
         self.carSpeed = 2  # initial speed
         self.__initPosition__()
 

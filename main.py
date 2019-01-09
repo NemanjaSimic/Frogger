@@ -10,6 +10,7 @@ import time
 from multiprocessing import Process, Queue
 from threading import Thread
 from MovingCars import CarMoving
+from CarCollision import *
 
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
@@ -32,6 +33,10 @@ class SimMoveDemo(QWidget):
         self.key_notifier = KeyNotifier()
         self.key_notifier.key_signal.connect(self.__frogMovement__)
         self.key_notifier.start()
+
+        self.car_collision = CarCollision()
+        self.car_collision.carCollisionSignal.connect(self.__car_collision__)
+        self.car_collision.start()
 
     def __init_ui__(self):
 
@@ -68,6 +73,10 @@ class SimMoveDemo(QWidget):
     def closeEvent(self, event):
         self.key_notifier.die()
         self.movingCar.die()
+        self.car_collision.die()
+
+    def __car_collision__(self):
+        Collision.detect(self)
 
     def __frogMovement__(self, key):
         rec1 = self.label1.geometry()
