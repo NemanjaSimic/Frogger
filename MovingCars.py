@@ -38,6 +38,8 @@ class CarMoving(QWidget):
         self.pix = QPixmap('car_1.png')
         self.pixTractor = QPixmap('car_2.png')
         self.pixFormula = QPixmap('car_3.png')
+        self.pixBPcar = QPixmap('car_4.png')
+        self.pixTruck = QPixmap('car_5.png')
 
         self.labelCar1 = QLabel(self)
         self.labelCar2 = QLabel(self)
@@ -45,13 +47,19 @@ class CarMoving(QWidget):
         self.labelTractor1 = QLabel(self)
         self.labelTractor2 = QLabel(self)
         self.labelTractor3 = QLabel(self)
-
+        self.labelBPcar1 = QLabel(self)
+        self.labelBPcar2 = QLabel(self)
+        self.labelBPcar3 = QLabel(self)
         self.labelFormula1 = QLabel(self)
         self.labelFormula2 = QLabel(self)
+        self.labelTruck1 = QLabel(self)
+        self.labelTruck2 = QLabel(self)
 
         self.cars = [self.labelCar1, self.labelCar2, self.labelCar3]
         self.tractors = [self.labelTractor1, self.labelTractor2, self.labelTractor3]
         self.formulas = [self.labelFormula1, self.labelFormula2]
+        self.BPcars = [self.labelBPcar1, self.labelBPcar2, self.labelBPcar3]
+        self.trucks = [self.labelTruck1, self.labelTruck2]
 
         self.carSpeed = 2  # initial speed
         self.__initPosition__()
@@ -73,16 +81,24 @@ class CarMoving(QWidget):
         self.labelTractor2.setGeometry(110, 480, 40, 40)
         self.labelTractor3.setPixmap(self.pixTractor)
         self.labelTractor3.setGeometry(300, 480, 40, 40)
-
+        self.labelBPcar1.setPixmap(self.pixBPcar)
+        self.labelBPcar1.setGeometry(480, 440, 40, 40)
+        self.labelBPcar2.setPixmap(self.pixBPcar)
+        self.labelBPcar2.setGeometry(370, 440, 40, 40)
+        self.labelBPcar3.setPixmap(self.pixBPcar)
+        self.labelBPcar3.setGeometry(180, 440, 40, 40)
         self.labelFormula1.setPixmap(self.pixFormula)
         self.labelFormula1.setGeometry(0, 400, 40, 40)
         self.labelFormula2.setPixmap(self.pixFormula)
         self.labelFormula2.setGeometry(60, 400, 40, 40)
+        self.labelTruck1.setPixmap(self.pixTruck)
+        self.labelTruck1.setGeometry(480, 360, 61, 40)
+        self.labelTruck2.setPixmap(self.pixTruck)
+        self.labelTruck2.setGeometry(240, 360, 61, 40)
 
         self.show()
 
     def __updatePosition__(self, carSpeed):
-
         for car in self.cars:
             carTemp = car.geometry()
             car.setGeometry(carTemp.x() - carSpeed, carTemp.y(), carTemp.width(), carTemp.height())
@@ -95,11 +111,23 @@ class CarMoving(QWidget):
             if tractorTemp.x() >= 520:
                 tractor.setGeometry(-40, 480, 40, 40)
 
+        for bpcar in self.BPcars:
+            bpcarTemp = bpcar.geometry()
+            bpcar.setGeometry(bpcarTemp.x() - carSpeed, bpcarTemp.y(), bpcarTemp.width(), bpcarTemp.height())
+            if bpcarTemp.x() <= -40:
+                bpcar.setGeometry(520, 440, 40, 40)
+
         for formula in self.formulas:
             formulaTemp = formula.geometry()
-            formula.setGeometry(formulaTemp.x() + carSpeed*2, formulaTemp.y(), formulaTemp.width(), formulaTemp.height())
+            formula.setGeometry(formulaTemp.x() + carSpeed*4, formulaTemp.y(), formulaTemp.width(), formulaTemp.height())
             if formulaTemp.x() >= 520:
                 formula.setGeometry(-40, 400, 40, 40)
+
+        for truck in self.trucks:
+            truckTemp = truck.geometry()
+            truck.setGeometry(truckTemp.x() - carSpeed*0.5, truckTemp.y(), truckTemp.width(), truckTemp.height())
+            if truckTemp.x() <= -61:
+                truck.setGeometry(541, 360, 61, 40)
 
     def die(self):
         self.carMoving.die()
