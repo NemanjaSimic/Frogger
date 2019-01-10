@@ -137,7 +137,7 @@ class SimMoveDemo(QWidget):
 
     def lose_life(self):
         self.moveFrog(220, 560)
-        self.player1.stepForward = 0
+        self.player1.stepMax=560
         self.player1.updateLives()
         self.livesCounter.setText(str(self.player1.lives))
         if self.player1.isDead is True:
@@ -158,12 +158,9 @@ class SimMoveDemo(QWidget):
             self.pix1 = QPixmap("pictures/frog_jump.png")
             self.label1.setPixmap(self.pix1)
             self.moveFrog(rec1.x(), rec1.y() - 40)
-            if self.player1.stepForward == 0:
-                self.player1.stepForward += 1
-                self.player1.updateScore(10)
-                self.scoreCounterLabel.setText(str(self.player1.score))
-            elif rec1.y() - 560 % 40 > self.player1.stepForward:
-                self.player1.stepForward += 1
+            rec1 = self.label1.geometry()
+            if self.player1.stepMax > rec1.y():
+                self.player1.stepMax = rec1.y()
                 self.player1.updateScore(10)
                 self.scoreCounterLabel.setText(str(self.player1.score))
         elif key == Qt.Key_Left and self.player1.isDead is False:

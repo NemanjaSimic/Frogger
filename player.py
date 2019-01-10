@@ -9,9 +9,10 @@ class Player(QWidget):
         self.label = label
         self.lives = 3
         self.score = 0
-        self.stepForward = 0
+        self.stepMax = 560
         self.timer = QBasicTimer()
         self.isDead = False
+
 
     def updateLives(self):
         self.lives -= 1
