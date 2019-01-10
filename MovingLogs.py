@@ -126,6 +126,9 @@ class LogMoving(QWidget):
             if mediumLogTemp.x() >= 605:
                 mediumLog.setGeometry(-125, 125, 125, 27)
 
+    def die(self):
+        self.logMoving.die()
+
 
 class MovingLogsObj:
 

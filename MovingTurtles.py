@@ -141,6 +141,9 @@ class TurtleMoving(QWidget):
                     self.counter4 = 0
                     self.turtlesObjs[6].Potop()
 
+    def die(self):
+        self.turtleMoving.die()
+
 
 class MovingTurtleObjs:
 

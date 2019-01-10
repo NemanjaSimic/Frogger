@@ -14,6 +14,7 @@ from MovingLogs import LogMoving
 from MovingTurtles import TurtleMoving
 from CollisionNotifier import CollisionNotifier
 from Collisions import *
+from Menu import *
 
 
 class SimMoveDemo(QWidget):
@@ -83,6 +84,8 @@ class SimMoveDemo(QWidget):
         self.key_notifier.die()
         self.collision_notifier.die()
         self.movingCar.die()
+        self.movingLog.die()
+        self.movingTurtle.die()
 
     def __car_collision__(self):
         CarCollision.detect(self)
@@ -133,10 +136,4 @@ class SimMoveDemo(QWidget):
             self.label1.setPixmap(self.pix1)
             self.moveFrog(rec1.x() - 35, rec1.y())
         elif key == Qt.Key_Escape:
-            sys.exit(app.exec_())
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    ex = SimMoveDemo()
-    sys.exit(app.exec_())
+            sys.exit()
