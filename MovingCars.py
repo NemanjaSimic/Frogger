@@ -1,4 +1,3 @@
-import ctypes
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
@@ -29,17 +28,17 @@ class CarMovement(QObject):
     def __work__(self):
         while not self.is_done:
             self.carMovementSignal.emit()
-            time.sleep(0.05)
+            time.sleep(0.1)
 
 
 class CarMoving(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
-        self.pix = QPixmap('car_1.png')
-        self.pixTractor = QPixmap('car_2.png')
-        self.pixFormula = QPixmap('car_3.png')
-        self.pixBPcar = QPixmap('car_4.png')
-        self.pixTruck = QPixmap('car_5.png')
+        self.pix = QPixmap('pictures/car_1.png')
+        self.pixTractor = QPixmap('pictures/car_2.png')
+        self.pixFormula = QPixmap('pictures/car_3.png')
+        self.pixBPcar = QPixmap('pictures/car_4.png')
+        self.pixTruck = QPixmap('pictures/car_5.png')
 
         self.labelCar1 = QLabel(self)
         self.labelCar2 = QLabel(self)

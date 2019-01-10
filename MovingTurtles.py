@@ -37,15 +37,15 @@ class TurtleMoving(QWidget):
 
         self.turtleSpeed = 2
 
-        self.pix3turtlesFull = QPixmap('turtle_3_full.png')
-        self.pix3turtlesHalf = QPixmap('turtle_3_half.png')
-        self.pix3turtlesQuarter = QPixmap('turtle_3_quarter.png')
-        self.pix3turtlesNone = QPixmap('turtle_3_zero.png')
+        self.pix3turtlesFull = QPixmap('pictures/turtle_3_full.png')
+        self.pix3turtlesHalf = QPixmap('pictures/turtle_3_half.png')
+        self.pix3turtlesQuarter = QPixmap('pictures/turtle_3_quarter.png')
+        self.pix3turtlesNone = QPixmap('pictures/turtle_3_zero.png')
 
-        self.pix2turtlesFull = QPixmap('turtle_2_full.png')
-        self.pix2turtlesHalf = QPixmap('turtle_2_half.png')
-        self.pix2turtlesQuarter = QPixmap('turtle_2_quarter.png')
-        self.pix2turtlesNone = QPixmap('turtle_2_zero.png')
+        self.pix2turtlesFull = QPixmap('pictures/turtle_2_full.png')
+        self.pix2turtlesHalf = QPixmap('pictures/turtle_2_half.png')
+        self.pix2turtlesQuarter = QPixmap('pictures/turtle_2_quarter.png')
+        self.pix2turtlesNone = QPixmap('pictures/turtle_2_zero.png')
 
         self.labelTurtle1 = QLabel(self)
         self.labelTurtle1Objs = MovingTurtleObjs(self.labelTurtle1, False, self.turtleSpeed)

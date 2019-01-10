@@ -34,9 +34,9 @@ class LogMovement(QObject):
 class LogMoving(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
-        self.pix1 = QPixmap('log_small.png')
-        self.pix2 = QPixmap('log_big.png')
-        self.pix3 = QPixmap('log_medium.png')
+        self.pix1 = QPixmap('pictures/log_small.png')
+        self.pix2 = QPixmap('pictures/log_big.png')
+        self.pix3 = QPixmap('pictures/log_medium.png')
 
         self.logSpeed = 2
 

@@ -2,9 +2,9 @@ from PyQt5.QtCore import *
 import time
 
 
-class RiverCollision(QObject):
+class CollisionNotifier(QObject):
 
-    riverCollisionSignal = pyqtSignal()
+    collisionSignal = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -25,5 +25,5 @@ class RiverCollision(QObject):
     @pyqtSlot()
     def __work__(self):
         while not self.is_done:
-            self.riverCollisionSignal.emit()
-            time.sleep(0.2)
+            self.collisionSignal.emit()
+            time.sleep(0.1)
