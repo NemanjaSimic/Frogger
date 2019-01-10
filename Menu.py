@@ -1,4 +1,6 @@
 from SimMoveDemo import *
+from PyQt5.QtGui import QImage, QPalette, QBrush
+from PyQt5.QtCore import QSize
 import sys
 
 
@@ -46,4 +48,3 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     ex = Menu()
     sys.exit(app.exec_())
-
