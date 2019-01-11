@@ -49,13 +49,13 @@ class LogMoving(QWidget):
         self.labelSmallLog4 = QLabel(self)
         self.labelSmallLog4Obj = MovingLogsObj(self.labelSmallLog4, True, self.logSpeed*0.7)
         self.labelBigLog1 = QLabel(self)
-        self.labelBigLog1Obj1 = MovingLogsObj(self.labelBigLog1, True, self.logSpeed*3)
+        self.labelBigLog1Obj1 = MovingLogsObj(self.labelBigLog1, True, self.logSpeed*2)
         self.labelBigLog2 = QLabel(self)
-        self.labelBigLog1Obj2 = MovingLogsObj(self.labelBigLog2, True, self.logSpeed * 3)
+        self.labelBigLog1Obj2 = MovingLogsObj(self.labelBigLog2, True, self.logSpeed * 2)
         self.labelBigLog3 = QLabel(self)
-        self.labelBigLog1Obj3 = MovingLogsObj(self.labelBigLog3, True, self.logSpeed * 3)
+        self.labelBigLog1Obj3 = MovingLogsObj(self.labelBigLog3, True, self.logSpeed * 2)
         self.labelBigLog4 = QLabel(self)
-        self.labelBigLog1Obj4 = MovingLogsObj(self.labelBigLog4, True, self.logSpeed * 3)
+        self.labelBigLog1Obj4 = MovingLogsObj(self.labelBigLog4, True, self.logSpeed * 2)
         self.labelMediumLog1 = QLabel(self)
         self.labelMediumLog1Obj = MovingLogsObj(self.labelMediumLog1, True, self.logSpeed)
         self.labelMediumLog2 = QLabel(self)
@@ -108,21 +108,26 @@ class LogMoving(QWidget):
         self.show()
 
     def __updatePosition__(self, logSpeed):
+        for log in self.logsObjs:
+            log_label = log.label
+            log_geo = log.label.geometry()
+            log_label.setGeometry(log_geo.x() + log.brzina, log_geo.y(), log_label.width(), log_label.height())
+
         for smallLog in self.smallLogs:
             smallLogTemp = smallLog.geometry()
-            smallLog.setGeometry(smallLogTemp.x() + logSpeed*0.7, smallLogTemp.y(), smallLogTemp.width(), smallLogTemp.height())
+            #smallLog.setGeometry(smallLogTemp.x() + logSpeed*0.7, smallLogTemp.y(), smallLogTemp.width(), smallLogTemp.height())
             if smallLogTemp.x() >= 571:
                 smallLog.setGeometry(-91, 245, 91, 27)
 
         for bigLog in self.bigLogs:
             bigLogTemp = bigLog.geometry()
-            bigLog.setGeometry(bigLogTemp.x() + logSpeed*3, bigLogTemp.y(), bigLogTemp.width(), bigLogTemp.height())
+            #bigLog.setGeometry(bigLogTemp.x() + logSpeed*2, bigLogTemp.y(), bigLogTemp.width(), bigLogTemp.height())
             if bigLogTemp.x() >= 673:
                 bigLog.setGeometry(-193, 205, 193, 26)
 
         for mediumLog in self.mediumLogs:
             mediumLogTemp = mediumLog.geometry()
-            mediumLog.setGeometry(mediumLogTemp.x() + logSpeed, mediumLogTemp.y(), mediumLogTemp.width(), mediumLogTemp.height())
+            #mediumLog.setGeometry(mediumLogTemp.x() + logSpeed, mediumLogTemp.y(), mediumLogTemp.width(), mediumLogTemp.height())
             if mediumLogTemp.x() >= 605:
                 mediumLog.setGeometry(-125, 125, 125, 27)
 
@@ -131,6 +136,11 @@ class LogMoving(QWidget):
 
     def closeEvent(self, event):
         self.logMoving.die()
+
+    def speed_up(self):
+        self.logSpeed += 1
+        for log in self.logsObjs:
+            log.brzina += 1
 
 
 class MovingLogsObj:

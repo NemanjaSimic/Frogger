@@ -135,3 +135,6 @@ class CarMoving(QWidget):
 
     def closeEvent(self, event):
         self.carMoving.die()
+
+    def speed_up(self):
+        self.carSpeed += 1

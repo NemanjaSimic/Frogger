@@ -109,10 +109,15 @@ class TurtleMoving(QWidget):
         self.show()
 
     def __updatePosition__(self, turtleSpeed):
+        for turtle in self.turtlesObjs:
+            turtle_label = turtle.label
+            turtle_geo = turtle.label.geometry()
+            turtle_label.setGeometry(turtle_geo.x() - turtle.brzina, turtle_geo.y(), turtle_label.width(), turtle_label.height())
+
         for turtle in self.turtles3:
             self.counter = self.counter + 1
             turtleTemp = turtle.geometry()
-            turtle.setGeometry(turtleTemp.x() - turtleSpeed, turtleTemp.y(), turtleTemp.width(), turtleTemp.height())
+            #turtle.setGeometry(turtleTemp.x() - turtleSpeed, turtleTemp.y(), turtleTemp.width(), turtleTemp.height())
             if turtleTemp.x() <= -100:
                 turtle.setGeometry(480, 280, 100, 40)
             if self.counter == 1600:
@@ -128,7 +133,7 @@ class TurtleMoving(QWidget):
         for turtle2 in self.turtles2:
             self.counter3 = self.counter3 + 1
             turtle2Temp = turtle2.geometry()
-            turtle2.setGeometry(turtle2Temp.x() - turtleSpeed*0.5, turtle2Temp.y(), turtle2Temp.width(), turtle2Temp.height())
+            #turtle2.setGeometry(turtle2Temp.x() - turtleSpeed*0.5, turtle2Temp.y(), turtle2Temp.width(), turtle2Temp.height())
             if turtle2Temp.x() <= -65:
                 turtle2.setGeometry(480, 160, 65, 40)
             if self.counter3 == 1600:
@@ -146,6 +151,10 @@ class TurtleMoving(QWidget):
 
     def closeEvent(self, event):
         self.turtleMoving.die()
+
+    def speed_up(self):
+        for turtle in self.turtlesObjs:
+            turtle.brzina += 1
 
 
 class MovingTurtleObjs:

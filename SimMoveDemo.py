@@ -49,15 +49,15 @@ class SimMoveDemo(QWidget):
         self.livesLabel = QLabel(self)
         self.livesCounter = QLabel(self)
         self.levelLable = QLabel(self)
-
+        self.gameOverLabel = QLabel(self)
         self.onTurtle = False
         self.onLog = False
 
         self.level = 1
         self.check_point = 0
 
-        self.player1 = Player(self.label1, 140)
-        self.player2 = Player(self.label2, 300)
+        self.player1 = Player(self.label1, 300)
+        self.player2 = Player(self.label2, 140)
         self.players = [self.player1, self.player2]
         self.__init_ui__()
 
@@ -97,6 +97,11 @@ class SimMoveDemo(QWidget):
         self.levelLable.setText(str(self.level))
         self.levelLable.setFont(font)
 
+        self.gameOverLabel.setGeometry(160, 250, 170, 50)
+        self.gameOverLabel.setText(str("GAME OVER"))
+        self.gameOverLabel.setFont(font)
+        self.gameOverLabel.hide()
+
         self.livesPix = QPixmap("pictures/lives.png")
         self.livesLabel.setPixmap(self.livesPix)
         self.livesLabel.setGeometry(300, 20, 100, 21)
@@ -106,11 +111,11 @@ class SimMoveDemo(QWidget):
         #self.scoreCounterLabel.setStyleSheet("{color: #EA4335}")
 
         self.label1.setPixmap(self.pix1)
-        self.label1.setGeometry(140, 560, 40, 40)
+        self.label1.setGeometry(300, 560, 40, 40)
         self.label1.raise_()
 
         self.label2.setPixmap(self.pix1)
-        self.label2.setGeometry(300,560,40,40)
+        self.label2.setGeometry(140,560,40,40)
         self.label2.raise_()
 
         self.setWindowTitle("Frogger")
@@ -188,9 +193,9 @@ class SimMoveDemo(QWidget):
     def level_up(self):
         self.level += 1
         self.levelLable.setText(str(self.level))
-        self.movingTurtle.turtleSpeed += 1
-        self.movingLog.logSpeed += 1
-        self.movingCar.carSpeed += 1
+        self.movingTurtle.speed_up()
+        self.movingLog.speed_up()
+        self.movingCar.speed_up()
         for obj in self.finishObjs:
             obj.reset()
 
@@ -233,6 +238,7 @@ class SimMoveDemo(QWidget):
         self.movingCar.close()
         self.movingLog.close()
         self.movingTurtle.close()
+        self.gameOverLabel.show()
 
     def lose_life(self, player):
         self.moveFrog(player.start, 560, player)
@@ -291,7 +297,6 @@ class SimMoveDemo(QWidget):
             self.pix1 = QPixmap("pictures/frog_left_jump.png")
             self.label2.setPixmap(self.pix1)
             self.moveFrog(rec2.x() - 25, rec2.y(), self.player2)
-
 
 
 class FinishObj(QWidget):
