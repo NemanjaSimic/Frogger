@@ -5,12 +5,13 @@ from PyQt5.QtWidgets import *
 
 
 class Player(QWidget):
-    def __init__(self, label):
+    def __init__(self, label, start):
         self.label = label
         self.lives = 3
         self.score = 0
         self.stepMax = 560
         self.timer = QBasicTimer()
+        self.start = start
         self.isDead = False
 
 

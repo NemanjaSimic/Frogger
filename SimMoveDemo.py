@@ -27,6 +27,7 @@ class SimMoveDemo(QWidget):
         self.label1 = QLabel(self)
         self.label2 = QLabel(self)
 
+
         self.labelF1 = QLabel(self)
         self.labelF1Obj = FinishObj(self, 15)
         self.labelF2 = QLabel(self)
@@ -55,7 +56,9 @@ class SimMoveDemo(QWidget):
         self.level = 1
         self.check_point = 0
 
-        self.player1 = Player(self.label1)
+        self.player1 = Player(self.label1, 140)
+        self.player2 = Player(self.label2, 300)
+        self.players = [self.player1, self.player2]
         self.__init_ui__()
 
         self.key_notifier = KeyNotifier()
@@ -63,10 +66,10 @@ class SimMoveDemo(QWidget):
         self.key_notifier.start()
 
         self.collision_notifier = CollisionNotifier()
-        #self.collision_notifier.collisionSignal.connect(self.__car_collision__)
-        #self.collision_notifier.collisionSignal.connect(self.__log_collision__)
-        #self.collision_notifier.collisionSignal.connect(self.__turtle_collision__)
-        #self.collision_notifier.collisionSignal.connect(self.__in_river)
+        self.collision_notifier.collisionSignal.connect(self.__car_collision__)
+        self.collision_notifier.collisionSignal.connect(self.__log_collision__)
+        self.collision_notifier.collisionSignal.connect(self.__turtle_collision__)
+        self.collision_notifier.collisionSignal.connect(self.__in_river)
         self.collision_notifier.start()
 
     def __init_ui__(self):
@@ -103,8 +106,12 @@ class SimMoveDemo(QWidget):
         #self.scoreCounterLabel.setStyleSheet("{color: #EA4335}")
 
         self.label1.setPixmap(self.pix1)
-        self.label1.setGeometry(220, 560, 40, 40)
+        self.label1.setGeometry(140, 560, 40, 40)
         self.label1.raise_()
+
+        self.label2.setPixmap(self.pix1)
+        self.label2.setGeometry(300,560,40,40)
+        self.label2.raise_()
 
         self.setWindowTitle("Frogger")
         self.show()
@@ -116,13 +123,29 @@ class SimMoveDemo(QWidget):
         self.key_notifier.rem_key(event.key())
         if event.key() == Qt.Key_Right and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_right.png")
+            self.label1.setPixmap(self.pix1)
         elif event.key() == Qt.Key_Left and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_left.png")
+            self.label1.setPixmap(self.pix1)
         elif event.key() == Qt.Key_Up and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog.png")
+            self.label1.setPixmap(self.pix1)
         elif event.key() == Qt.Key_Down and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_back.png")
-        self.label1.setPixmap(self.pix1)
+            self.label1.setPixmap(self.pix1)
+        elif event.key() == Qt.Key_D and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_right.png")
+            self.label2.setPixmap(self.pix1)
+        elif event.key() == Qt.Key_A and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_left.png")
+            self.label2.setPixmap(self.pix1)
+        elif event.key() == Qt.Key_W and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog.png")
+            self.label2.setPixmap(self.pix1)
+        elif event.key() == Qt.Key_S and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_back.png")
+            self.label2.setPixmap(self.pix1)
+
 
     def closeEvent(self, event):
         self.key_notifier.die()
@@ -146,18 +169,21 @@ class SimMoveDemo(QWidget):
         else:
             return True
 
-    def moveFrog(self, x, y):
-        self.label1.setGeometry(x, y, 40, 40)
+    def moveFrog(self, x, y,player):
+        player.label.setGeometry(x, y, 40, 40)
         if self.__is_frog_in_screen__(x, y) is False:
-            self.lose_life()
+            self.lose_life(player)
         else:
-            self.__check_frog_movement__(x, y)
+            self.__check_frog_movement__(x, y, player)
 
     def __in_river(self):
-        frog = self.label1.geometry()
-        if frog.y() < 320 and frog.y() > 80:
-            if not self.onTurtle and not self.onLog:
-                self.label1.setGeometry(220, 560, 40, 40)
+        for player in self.players:
+            frog = player.label.geometry()
+            if frog.y() < 320 and frog.y() > 80:
+                if not player.onTurtle and not player.onLog:
+                    #player.label.setGeometry(220, 560, 40, 40)
+                    self.lose_life(self.player1)
+                    self.lose_life(self.player2)
 
     def level_up(self):
         self.level += 1
@@ -177,61 +203,63 @@ class SimMoveDemo(QWidget):
             self.check_point = 0
             self.level_up()
 
-    def __check_frog_movement__(self, x, y):
+    def __check_frog_movement__(self, x, y, player):
         if (y > 50 and y < 120):
             if (x>10 and x<21) and self.finishObjs[0].finished is False:
                 self.finishObjs[0].finish()
                 self.__get_check_point__()
-                self.moveFrog(220, 560)
+                self.moveFrog(player.start, 560, player)
             elif (x>113 and x<123) and self.finishObjs[1].finished is False:
                 self.finishObjs[1].finish()
                 self.__get_check_point__()
-                self.moveFrog(220, 560)
+                self.moveFrog(player.start, 560, player)
             elif (x>216 and x<226) and self.finishObjs[2].finished is False:
                 self.finishObjs[2].finish()
                 self.__get_check_point__()
-                self.moveFrog(220, 560)
+                self.moveFrog(player.start, 560, player)
             elif (x>318 and x<328) and self.finishObjs[3].finished is False:
                 self.finishObjs[3].finish()
                 self.__get_check_point__()
-                self.moveFrog(220, 560)
+                self.moveFrog(player.start, 560, player)
             elif (x>418 and x<430) and self.finishObjs[4].finished is False:
                 self.finishObjs[4].finish()
                 self.__get_check_point__()
-                self.moveFrog(220, 560)
+                self.moveFrog(player.start, 560, player)
             else:
-                self.lose_life()
-
-    def lose_life(self):
-        self.moveFrog(220, 560)
-        self.player1.stepMax=560
-        self.player1.updateLives()
-        self.livesCounter.setText(str(self.player1.lives))
-        if self.player1.isDead is True:
-            self.label1.destroy()
-            self.death()
+                self.lose_life(self.player1)
+                self.lose_life(self.player2)
 
     def death(self):
         self.movingCar.close()
         self.movingLog.close()
         self.movingTurtle.close()
 
+    def lose_life(self, player):
+        self.moveFrog(player.start, 560, player)
+        player.stepMax = 560
+        player.updateLives()
+        self.livesCounter.setText(str(player.lives))
+        if player.isDead is True:
+            player.label.destroy()
+            self.death()
+
     def __frogMovement__(self, key):
         rec1 = self.label1.geometry()
+        rec2 = self.label2.geometry()
 
         if key == Qt.Key_Right and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_right_jump.png")
             self.label1.setPixmap(self.pix1)
-            self.moveFrog(rec1.x() + 25, rec1.y())
+            self.moveFrog(rec1.x() + 25, rec1.y(), self.player1)
         elif key == Qt.Key_Down and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_back_jump.png")
             self.label1.setPixmap(self.pix1)
-            self.moveFrog(rec1.x(), rec1.y() + 40)
+            self.moveFrog(rec1.x(), rec1.y() + 40, self.player1)
         elif key == Qt.Key_Up and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_jump.png")
             self.label1.setPixmap(self.pix1)
-            self.moveFrog(rec1.x(), rec1.y() - 40)
-            rec1 = self.label1.geometry()
+            self.moveFrog(rec1.x(), rec1.y() - 40,self.player1)
+            rec1 = self.player1.label.geometry()
             if self.player1.stepMax > rec1.y():
                 self.player1.stepMax = rec1.y()
                 self.player1.updateScore(10)
@@ -239,9 +267,31 @@ class SimMoveDemo(QWidget):
         elif key == Qt.Key_Left and self.player1.isDead is False:
             self.pix1 = QPixmap("pictures/frog_left_jump.png")
             self.label1.setPixmap(self.pix1)
-            self.moveFrog(rec1.x() - 25, rec1.y())
+            self.moveFrog(rec1.x() - 25, rec1.y(), self.player1)
         elif key == Qt.Key_Escape:
             sys.exit()
+        elif key == Qt.Key_D and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_right_jump.png")
+            self.label2.setPixmap(self.pix1)
+            self.moveFrog(rec2.x() + 25, rec2.y(), self.player2)
+        elif key == Qt.Key_S and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_back_jump.png")
+            self.label2.setPixmap(self.pix1)
+            self.moveFrog(rec2.x(), rec2.y() + 40, self.player2)
+        elif key == Qt.Key_W and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_jump.png")
+            self.label2.setPixmap(self.pix1)
+            self.moveFrog(rec2.x(), rec2.y() - 40, self.player2)
+            rec2 = self.label2.geometry()
+            if self.player2.stepMax > rec2.y():
+                self.player2.stepMax = rec2.y()
+                self.player1.updateScore(10)
+                self.scoreCounterLabel.setText(str(self.player1.score))
+        elif key == Qt.Key_A and self.player2.isDead is False:
+            self.pix1 = QPixmap("pictures/frog_left_jump.png")
+            self.label2.setPixmap(self.pix1)
+            self.moveFrog(rec2.x() - 25, rec2.y(), self.player2)
+
 
 
 class FinishObj(QWidget):
