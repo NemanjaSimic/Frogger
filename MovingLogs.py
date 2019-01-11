@@ -129,6 +129,9 @@ class LogMoving(QWidget):
     def die(self):
         self.logMoving.die()
 
+    def closeEvent(self, event):
+        self.logMoving.die()
+
 
 class MovingLogsObj:
 

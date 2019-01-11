@@ -144,6 +144,9 @@ class TurtleMoving(QWidget):
     def die(self):
         self.turtleMoving.die()
 
+    def closeEvent(self, event):
+        self.turtleMoving.die()
+
 
 class MovingTurtleObjs:
 

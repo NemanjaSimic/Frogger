@@ -132,3 +132,6 @@ class CarMoving(QWidget):
 
     def die(self):
         self.carMoving.die()
+
+    def closeEvent(self, event):
+        self.carMoving.die()
