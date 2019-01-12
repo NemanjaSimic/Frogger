@@ -7,18 +7,22 @@ from PyQt5.QtWidgets import *
 from KeyNotifier import *
 from player import Player
 import time
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Pipe
 from threading import Thread
 from MovingCars import CarMoving
 from MovingLogs import LogMoving
 from MovingTurtles import TurtleMoving
 from CollisionNotifier import CollisionNotifier
 from Collisions import *
+from PyQt5.QtCore import pyqtSignal, Qt, QMutex
 from Menu import *
+from FlyBonus import *
+from FlyBonusThread import *
+import multiprocessing as mp
 
 
 class SimMoveDemo(QWidget):
-
+    mutex = QMutex()
     def __init__(self):
         super().__init__()
 
@@ -26,7 +30,6 @@ class SimMoveDemo(QWidget):
 
         self.label1 = QLabel(self)
         self.label2 = QLabel(self)
-
 
         self.labelF1 = QLabel(self)
         self.labelF1Obj = FinishObj(self, 15)
@@ -66,10 +69,10 @@ class SimMoveDemo(QWidget):
         self.key_notifier.start()
 
         self.collision_notifier = CollisionNotifier()
-        self.collision_notifier.collisionSignal.connect(self.__car_collision__)
-        self.collision_notifier.collisionSignal.connect(self.__log_collision__)
-        self.collision_notifier.collisionSignal.connect(self.__turtle_collision__)
-        self.collision_notifier.collisionSignal.connect(self.__in_river)
+        #self.collision_notifier.collisionSignal.connect(self.__car_collision__)
+       # self.collision_notifier.collisionSignal.connect(self.__log_collision__)
+        #self.collision_notifier.collisionSignal.connect(self.__turtle_collision__)
+      #  self.collision_notifier.collisionSignal.connect(self.__in_river)
         self.collision_notifier.start()
 
     def __init_ui__(self):
@@ -115,11 +118,17 @@ class SimMoveDemo(QWidget):
         self.label1.raise_()
 
         self.label2.setPixmap(self.pix1)
-        self.label2.setGeometry(140,560,40,40)
+        self.label2.setGeometry(140, 560, 40, 40)
         self.label2.raise_()
 
         self.setWindowTitle("Frogger")
         self.show()
+
+        self.ex_pipe, self.in_pipe = Pipe()
+        self.flyBonusProcess = FlyBonus(pipe=self.ex_pipe, checkPoints=5)
+        self.flyBonusThread = FlyBonusThread(self)
+        self.flyBonusProcess.start()
+        self.flyBonusThread.start()
 
     def keyPressEvent(self, event):
         self.key_notifier.add_key(event.key())
@@ -211,22 +220,43 @@ class SimMoveDemo(QWidget):
     def __check_frog_movement__(self, x, y, player):
         if (y > 50 and y < 120):
             if (x>10 and x<21) and self.finishObjs[0].finished is False:
+                if self.finishObjs[0].hasFlyBonus is True:
+                    self.player1.updateScore(400)
+                    self.scoreCounterLabel.setText(str(self.player1.score))
+                    self.finishObjs[0].hideBonus()
                 self.finishObjs[0].finish()
                 self.__get_check_point__()
                 self.moveFrog(player.start, 560, player)
             elif (x>113 and x<123) and self.finishObjs[1].finished is False:
+                if self.finishObjs[1].hasFlyBonus is True:
+                    self.player1.updateScore(400)
+                    self.scoreCounterLabel.setText(str(self.player1.score))
+                    self.finishObjs[1].hideBonus()
                 self.finishObjs[1].finish()
                 self.__get_check_point__()
                 self.moveFrog(player.start, 560, player)
             elif (x>216 and x<226) and self.finishObjs[2].finished is False:
+                if self.finishObjs[2].hasFlyBonus is True:
+                    self.player1.updateScore(400)
+                    self.scoreCounterLabel.setText(str(self.player1.score))
+                    self.finishObjs[2].hideBonus()
                 self.finishObjs[2].finish()
                 self.__get_check_point__()
                 self.moveFrog(player.start, 560, player)
             elif (x>318 and x<328) and self.finishObjs[3].finished is False:
+                if self.finishObjs[3].hasFlyBonus is True:
+                    self.player1.updateScore(400)
+                    self.scoreCounterLabel.setText(str(self.player1.score))
+                    self.finishObjs[3].hideBonus()
+                print("cetvrti ulaz")
                 self.finishObjs[3].finish()
                 self.__get_check_point__()
                 self.moveFrog(player.start, 560, player)
             elif (x>418 and x<430) and self.finishObjs[4].finished is False:
+                if self.finishObjs[4].hasFlyBonus is True:
+                    self.player1.updateScore(400)
+                    self.scoreCounterLabel.setText(str(self.player1.score))
+                    self.finishObjs[4].hideBonus()
                 self.finishObjs[4].finish()
                 self.__get_check_point__()
                 self.moveFrog(player.start, 560, player)
@@ -304,15 +334,27 @@ class FinishObj(QWidget):
         super().__init__(parent)
         self.frog_safe = QLabel(self)
         self.pix_frog_safe = QPixmap("pictures/frog_safe.png")
-        self.frog_safe.setPixmap(self.pix_frog_safe)
+        self.pix_fly_bonus = QPixmap("pictures/fly.png")
         self.frog_safe.setGeometry(x, 80, 40, 40)
+        self.hasFlyBonus = False
         self.hide()
         self.finished = False
 
     def finish(self):
         self.finished = True
+        self.frog_safe.setPixmap(self.pix_frog_safe)
         self.show()
+
 
     def reset(self):
         self.finished = False
         self.hide()
+
+    def showBonus(self):
+        self.frog_safe.setPixmap(self.pix_fly_bonus)
+        self.show()
+        self.hasFlyBonus = True
+
+    def hideBonus(self):
+        self.hide()
+        self.hasFlyBonus = False
