@@ -19,7 +19,6 @@ class CommunicationThreads(QThread):
 
     def run(self):
         while not self.was_cancelled:
-            print("u runu sam")
             try:
                 self.__connect__()
             except Exception as e:
@@ -36,7 +35,6 @@ class CommunicationThreads(QThread):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.bind((HOST, PORT))
         self.socket.listen(1)
-        print("wait for next accept")
         self.conn, self.addr = self.socket.accept()
         print(f"client1 accepted -> address: {self.addr}")
         self.connections.append(self.conn)
@@ -84,7 +82,6 @@ class Receive(QObject):
     @pyqtSlot()
     def __work__(self):
             while not self.is_done:
-
                 text = ''
                 bin = 0
                 try:
@@ -93,7 +90,6 @@ class Receive(QObject):
                     print("Error recv:", e)
 
                 text = str(bin, 'utf-8')
-                print('Received', text)
                 if self.m == 0:
                     if text == 'right':
                         self.key_signal.emit(Qt.Key_Right)
@@ -148,31 +144,43 @@ class Send(QThread):
                 print("Error:", e)
 
     def connect(self):
+            self.parenQWidget.mutex.lock()
             frog1_geo = self.parenQWidget.label1.geometry()
-            frog1 = [frog1_geo.x(), frog1_geo.y()]
             frog2_geo = self.parenQWidget.label2.geometry()
+            self.parenQWidget.mutex.unlock()
+            
+            frog1 = [frog1_geo.x(), frog1_geo.y()]           
             frog2 = [frog2_geo.x(), frog2_geo.y()]
 
             vehicles = []
+            self.parenQWidget.mutex.lock()
             for car in self.parenQWidget.movingCar.vehicles:
                 temp_geo = (car.geometry())
                 vehicles.append(temp_geo.x())
+            self.parenQWidget.mutex.unlock()
 
             turtles = []
+            self.parenQWidget.mutex.lock()
             for turtle in self.parenQWidget.movingTurtle.turtles:
                 temp_geo = (turtle.geometry())
                 turtles.append(temp_geo.x())
+            self.parenQWidget.mutex.unlock()
 
             logs = []
+            self.parenQWidget.mutex.lock()
             for log in self.parenQWidget.movingLog.logs:
                 temp_geo = (log.geometry())
                 logs.append(temp_geo.x())
+            self.parenQWidget.mutex.unlock()
 
+            self.parenQWidget.mutex.lock()
             level = self.parenQWidget.level
             scores = [self.parenQWidget.player1.score, self.parenQWidget.player2.score]
             lives = [self.parenQWidget.player1.lives, self.parenQWidget.player2.lives]
+            self.parenQWidget.mutex.unlock()
 
             check_point = []
+            self.parenQWidget.mutex.lock()
             for obj in self.parenQWidget.finishObjs:
                 if obj.hasFlyBonus is True:
                     check_point.append(2)
@@ -180,6 +188,7 @@ class Send(QThread):
                     check_point.append(1)
                 else:
                     check_point.append(0)
+            self.parenQWidget.mutex.unlock()
 
             self.parenQWidget.mutex.lock()
             timer = self.parenQWidget.timer
@@ -199,8 +208,7 @@ class Send(QThread):
             else:
                 result = self.parenQWidget.result_string2
             data = pickle.dumps((frog1, frog2, vehicles, turtles, logs, level, scores, lives, check_point, timer, turtle_pics, result))
-            duzina = len(data)
-            print("Duzina:", duzina)
+
             try:
                 self.conn.sendall(data)
             except Exception as e:

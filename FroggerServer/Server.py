@@ -32,10 +32,6 @@ class Menu(QMainWindow):
     def __init_ui__(self):
         self.setWindowTitle("Frogger")
 
-        exitBtn = QPushButton('EXIT GAME', self)
-        exitBtn.setGeometry(150, 400, 180, 21)
-        exitBtn.clicked.connect(self.exit)
-
         self.show()
 
     def start_game(self):
@@ -72,10 +68,6 @@ class Menu(QMainWindow):
 
     def finale(self, player1, player2):
         SimMoveDemo(player1, GameMode.FINALE, player2)
-
-    def exit(self):
-        sys.exit()
-        self.close()
 
 
 if __name__ == "__main__":

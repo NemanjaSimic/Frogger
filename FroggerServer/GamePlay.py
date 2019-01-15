@@ -13,7 +13,6 @@ class Player(QWidget):
         self.lives = 3
         self.score = 0
         self.stepMax = 560
-        self.timer = QBasicTimer()
         self.start = start
         self.isDead = False
         self.score_l = score_label
@@ -52,6 +51,9 @@ class TimerClass(QThread):
     def run(self):
         while not self.was_canceled:
             self.count_time()
+
+    def die(self):
+        self.was_canceled = True
 
     @pyqtSlot()
     def count_time(self):

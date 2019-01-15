@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0904874-7261-4ba4-aa69-08ed3e43877f" name="Default Changelist" comment="" />
+    <list default="true" id="c0904874-7261-4ba4-aa69-08ed3e43877f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Frogger.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frogger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/Menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Threads.py" beforeDir="false" afterPath="$PROJECT_DIR$/Threads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FroggerServer/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../FroggerServer/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FroggerServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../FroggerServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FroggerServer/FlyBonusThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/../FroggerServer/FlyBonusThread.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FroggerServer/Frogger.py" beforeDir="false" afterPath="$PROJECT_DIR$/../FroggerServer/Frogger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FroggerServer/GamePlay.py" beforeDir="false" afterPath="$PROJECT_DIR$/../FroggerServer/GamePlay.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FroggerServer/Threads.py" beforeDir="false" afterPath="$PROJECT_DIR$/../FroggerServer/Threads.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Frogger.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2070">
-              <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+            <state relative-caret-position="-611">
+              <caret line="174" column="31" selection-start-line="174" selection-start-column="31" selection-end-line="174" selection-end-column="31" />
               <folding>
                 <element signature="e#22#35#0" expanded="true" />
               </folding>
@@ -28,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Threads.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="108" column="29" selection-start-line="108" selection-start-column="29" selection-end-line="108" selection-end-column="29" />
+            <state relative-caret-position="508">
+              <caret line="38" column="40" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
               <folding>
                 <element signature="e#0#75#0" expanded="true" />
               </folding>
@@ -37,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Menu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1054">
-              <caret line="62" selection-start-line="62" selection-end-line="62" />
+            <state relative-caret-position="856">
+              <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -63,6 +73,9 @@
       <find>mutex</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -73,9 +86,9 @@
         <option value="$PROJECT_DIR$/MovingTurtles.py" />
         <option value="$PROJECT_DIR$/socket_send.py" />
         <option value="$PROJECT_DIR$/Labels.py" />
-        <option value="$PROJECT_DIR$/Menu.py" />
-        <option value="$PROJECT_DIR$/Threads.py" />
         <option value="$PROJECT_DIR$/Frogger.py" />
+        <option value="$PROJECT_DIR$/Threads.py" />
+        <option value="$PROJECT_DIR$/Menu.py" />
       </list>
     </option>
   </component>
@@ -85,6 +98,7 @@
     <option name="width" value="1040" />
     <option name="height" value="1256" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -95,7 +109,7 @@
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
             <path>
-              <item name="sockets" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="FroggerClient" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
@@ -216,12 +230,12 @@
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.20758483" />
       <window_info id="Structure" order="2" weight="0.249501" />
       <window_info anchor="bottom" id="Event Log" order="0" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="1" />
       <window_info anchor="bottom" id="Python Console" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.10863758" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.10863758" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.36598396" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -293,30 +307,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Threads.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="108" column="29" selection-start-line="108" selection-start-column="29" selection-end-line="108" selection-end-column="29" />
+        <state relative-caret-position="508">
+          <caret line="38" column="40" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
           <folding>
             <element signature="e#0#75#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Menu.py">
+    <entry file="file://$PROJECT_DIR$/Frogger.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
+        <state relative-caret-position="-611">
+          <caret line="174" column="31" selection-start-line="174" selection-start-column="31" selection-end-line="174" selection-end-column="31" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#22#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Frogger.py">
+    <entry file="file://$PROJECT_DIR$/Menu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2070">
-          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+        <state relative-caret-position="856">
+          <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
           <folding>
-            <element signature="e#22#35#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>

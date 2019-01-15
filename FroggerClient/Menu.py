@@ -40,6 +40,7 @@ class Menu(QMainWindow):
 
         exitBtn = QPushButton('EXIT GAME', self)
         exitBtn.setGeometry(150, 500, 180, 21)
+        exitBtn.clicked.connect(self.exit)
         
         self.textBox.move(20,20)
         self.textBox.resize(150,40)
@@ -54,6 +55,9 @@ class Menu(QMainWindow):
 
     def tournament(self):
         Gui(2, self.textBox.text())
+
+    def exit(self):
+        self.close()
 
 
 if __name__ == "__main__":

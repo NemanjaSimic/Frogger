@@ -106,10 +106,6 @@ class SimMoveDemo(QWidget):
         self.winner_conn = 0
         self.new_game = True
 
-        self.winner_text = 'WINNER_'
-        self.loser_text = 'LOSER_'
-        self.next_round_text = 'NEXT_'
-        self.winner_tour_text = 'TWINNER_'
         self.text = ''
         self.result_string1 = ''
         self.result_string2 = ''
@@ -190,32 +186,6 @@ class SimMoveDemo(QWidget):
         self.flyBonusThread = FlyBonusThread(self)
         self.flyBonusProcess.start()
         self.flyBonusThread.start()
-
-    def keyReleaseEvent(self, event):
-        if event.key() == Qt.Key_Right and self.player1.isDead is False:
-            self.pix1 = QPixmap("pictures/frog_right.png")
-            self.label1.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_Left and self.player1.isDead is False:
-            self.pix1 = QPixmap("pictures/frog_left.png")
-            self.label1.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_Up and self.player1.isDead is False:
-            self.pix1 = QPixmap("pictures/frog.png")
-            self.label1.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_Down and self.player1.isDead is False:
-            self.pix1 = QPixmap("pictures/frog_back.png")
-            self.label1.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_D and self.player2.isDead is False:
-            self.pix1 = QPixmap("pictures/frog_right.png")
-            self.label2.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_A and self.player2.isDead is False:
-            self.pix1 = QPixmap("pictures/frog_left.png")
-            self.label2.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_W and self.player2.isDead is False:
-            self.pix1 = QPixmap("pictures/frog.png")
-            self.label2.setPixmap(self.pix1)
-        elif event.key() == Qt.Key_S and self.player2.isDead is False:
-            self.pix1 = QPixmap("pictures/frog_back.png")
-            self.label2.setPixmap(self.pix1)
 
     def __car_collision__(self):
         CarCollision.detect(self)
@@ -316,6 +286,7 @@ class SimMoveDemo(QWidget):
             self.receive2.die()
         self.flyBonusThread.die()
         self.flyBonusProcess.die()
+        self.timer_thread.die()
         self.close()
 
     def game_end(self):
@@ -344,7 +315,7 @@ class SimMoveDemo(QWidget):
                 self.result_string1 = 'NEXT'
                 self.result_string2 = 'LOSER'
             else:
-                self.result_string2 = 'WINNER'
+                self.result_string2 = 'NEXT'
                 self.result_string1 = 'LOSER'
                 self.winner_conn = self.conn2
         elif self.game_mode == GameMode.FINALE:

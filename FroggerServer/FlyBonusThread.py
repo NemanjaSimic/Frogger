@@ -27,8 +27,6 @@ class FlyBonusThread(QThread):
         recvMsg = self.parent_widget.in_pipe.recv()
         self.parent_widget.mutex.lock()
 
-        print("Pipe number", recvMsg)
-
         if recvMsg == 1 and self.parent_widget.finishObjs[0].finished is False:
             self.parent_widget.finishObjs[0].showBonus()
         elif recvMsg == 2 and self.parent_widget.finishObjs[1].finished is False:
@@ -59,7 +57,6 @@ class FlyBonus(Process):
             rand_checkPoint = random.randint(1, self.checkPoints)
 
             pipe.send(rand_checkPoint)
-            print("Bravo")
     
     def die(self):
         super().terminate()

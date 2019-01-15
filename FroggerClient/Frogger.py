@@ -55,7 +55,6 @@ class Gui(QWidget):
         self.lost_label = QLabel(self)
         self.lw_label = QLabel(self)
         self.wl_label = QLabel(self)
-        #self.exitBtn = QPushButton('MENU', self)
 
         self.movingCars = ''
         self.movingTurtles = ''
@@ -174,8 +173,6 @@ class Gui(QWidget):
         self.movingCars.close()
         self.movingTurtles.close()
         self.movingLogs.close()
-        #self.winner.show()
-        #self.gameOverLabel.show()
 
     def __to_menu__(self):
         exitBtn = QPushButton('MENU', self)
@@ -244,29 +241,32 @@ class Gui(QWidget):
         try:
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.s.connect((self.host, PORT))
+
+            print("Connected")
+            signal = 'o'
+            if self.mode == 1:
+                signal = 'b'
+            elif self.mode == 2:
+                signal = 't'
+
+            self.s.sendall(signal.encode('utf8'))
+            self.receive = Receive(self.s, self)
+            self.receive.position_signal.connect(self.__movement__)
+            self.receive.new_game_signal.connect(self.new_game)
+            self.receive.lw_signal.connect(self.__lw__)
+            self.receive.wl_signal.connect(self.__wl__)
+            self.receive.lose_signal.connect(self.__lose__)
+            self.receive.win_signal.connect(self.__win__)
+            self.receive.next_signal.connect(self.__next__)
+            self.receive.winner_signal.connect(self.__t_winner__)
+            self.send = Send(self.s)
+            self.receive.start()
+            self.send.start()
+            self.connected = True
         except Exception as e:
             print("Konekcija pukla:", e)
-        print("Connected")
-        signal = 'o'
-        if self.mode == 1:
-            signal = 'b'
-        elif self.mode == 2:
-            signal = 't'
-
-        self.s.sendall(signal.encode('utf8'))
-        self.receive = Receive(self.s, self)
-        self.receive.position_signal.connect(self.__movement__)
-        self.receive.new_game_signal.connect(self.new_game)
-        self.receive.lw_signal.connect(self.__lw__)
-        self.receive.wl_signal.connect(self.__wl__)
-        self.receive.lose_signal.connect(self.__lose__)
-        self.receive.win_signal.connect(self.__win__)
-        self.receive.next_signal.connect(self.__next__)
-        self.receive.winner_signal.connect(self.__t_winner__)
-        self.send = Send(self.s)
-        self.receive.start()
-        self.send.start()
-        self.connected = True
+            self.close()
+       
 
     def keyPressEvent(self, event):
         if self.connected is True:
